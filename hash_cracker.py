@@ -1,13 +1,14 @@
 import hashlib, os, sys, time, threading
+from colorama import Fore, Back, Style, init
+init()
+usage = Fore.YELLOW + """
+              Usage :                    |            Available HASH : 
+  Arg1 -- The hash's algorithm           |          MD5 ----------- md5
+  Arg2 -- The hash you wants to crack    |       SHA256 ----------- sha256
+  Arg3 -- The path to the wordlist       |       SHA512 ----------- sha512
 
-usage = """
-Usage :                                               Available HASH : 
-  Arg1 -- The hash's algorithm                          MD5 -- md5
-  Arg2 -- The hash you wants to crack                   SHA256 -- sha256
-  Arg3 -- The path to the wordlist                      SHA512 -- sha512
-
-  Example : python3 <hash_type> <your_hash> <path_to_the_wordlist> 
-"""
+  Example : python3 <hash_type> <your_hash> <path_to_the_wordlist>
+""" + Fore.RESET
 
 def md5_decrypt(UA):
     t1 = time.time()
@@ -20,12 +21,14 @@ def md5_decrypt(UA):
         if md5_hash == UA:
             t2 = time.time()
             tt = t2 - t1
-            HR = counter/tt
-            print("[*] The corresponding string to",UA,"is",line)
-            print("[*] Found in ",tt, "seconds and ",counter,"hash tested")
-            print("[++] HashRate : ",HR,"/s" )
+            try :
+                HR = counter/tt
+            except:
+                HR = "Too short interval to properly mesuring hashrate"
+            print("[*] The corresponding string to",UA,"is "+Fore.RED+line+Fore.RESET)
+            print("[*] Found in "+Fore.RED,tt,"seconds",Fore.RESET,"and",Fore.RED,counter,"hash tested",Fore.RESET)
+            print("[+] HashRate in",sys.argv[1],":"+Fore.YELLOW,HR,"/s"+Fore.RESET)
             break
-
 
 def sha256_decrypt(UA):
     t1 = time.time()
@@ -39,9 +42,9 @@ def sha256_decrypt(UA):
             t2 = time.time()
             tt = t2 - t1
             HR = counter/tt
-            print("[*] The corresponding string to",UA,"is",line)
-            print("[*] Found in ",tt, "seconds and ",counter,"hash tested")
-            print("[++] HashRate : ",HR,"/s" )
+            print("[*] The corresponding string to",UA,"is "+Fore.RED+line+Fore.RESET)
+            print("[*] Found in "+Fore.RED,tt,"seconds",Fore.RESET,"and",Fore.RED,counter,"hash tested",Fore.RESET)
+            print("[+] HashRate in",sys.argv[1],":"+Fore.YELLOW,HR,"/s"+Fore.RESET)
             break
 
 def sha512_decrypt(UA):
@@ -56,9 +59,9 @@ def sha512_decrypt(UA):
             t2 = time.time()
             tt = t2 - t1
             HR = counter/tt
-            print("[*] The corresponding string to",UA,"is",line)
-            print("[*] Found in ",tt, "seconds and ",counter,"hash tested")
-            print("[++] HashRate in",sys.argv[1],":",HR,"/s" )
+            print("[*] The corresponding string to",UA,"is "+Fore.RED+line+Fore.RESET)
+            print("[*] Found in "+Fore.RED,tt,"seconds",Fore.RESET,"and",Fore.RED,counter,"hash tested",Fore.RESET)
+            print("[+] HashRate in",sys.argv[1],":"+Fore.YELLOW,HR,"/s"+Fore.RESET)
             break
 
 if len(sys.argv) < 4:
