@@ -1,16 +1,16 @@
 import hashlib, os, sys, time
 from threading import Thread
 from colorama import Fore, Back, Style, init
+from tqdm import tqdm
 init()
 usage = Fore.YELLOW + """
               Usage :                    |            Available HASH : 
   Arg1 -- The hash's algorithm           |          MD5 ----------- md5
   Arg2 -- The hash you wants to crack    |       SHA256 ----------- sha256
   Arg3 -- The path to the wordlist       |       SHA512 ----------- sha512
-  
+
   Example : python3 <hash_type> <your_hash> <path_to_the_wordlist>
-  Example : python3 <hash_type> <your_hash> #select the default wordlist (rockyou)
-  "sUtOr, nE SuPrA CrEpIdAm"...
+  Example : python3 <hash_type> <your_hash> #select the default wordlist (rockyou) 
 """ + Fore.RESET
 
 class bruteforcing:
@@ -18,7 +18,7 @@ class bruteforcing:
         t1 = time.time()
         global counter
         print("[*] Attacking md5 hash",UA, "by bruteforce.")
-        for line in file:
+        for line in tqdm(file,total=len(list(open(path_to_WL,"rb"))),unit="pass"):
             line = line.replace("\n","")
             guess = hashlib.md5(line.encode()).hexdigest()
             counter += 1
@@ -28,7 +28,7 @@ class bruteforcing:
         t1 = time.time()
         global counter
         print("[*] Attacking Sha256 hash",UA,"by bruteforce.")
-        for line in file:
+        for line in tqdm(file,total=len(list(open(path_to_WL,"rb"))),unit="pass"):
             line = line.replace("\n","")
             guess = hashlib.sha256(line.encode()).hexdigest()
             counter += 1
@@ -38,7 +38,7 @@ class bruteforcing:
         t1 = time.time()
         global counter
         print("[*] Attacking sha512 hash", UA, "by bruteforce.")
-        for line in file:
+        for line in tqdm(file,total=len(list(open(path_to_WL,"rb"))),unit="pass"):
             line = line.replace("\n","")
             guess = hashlib.sha512(line.encode()).hexdigest()
             counter += 1
